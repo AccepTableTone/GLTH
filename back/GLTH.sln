@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLTH.Api", "GLTH\GLTH.Api.csproj", "{1F222F5F-E65D-4C9D-AB23-3B9A3B7A8B59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLTH.Contracts", "GLTH.Contracts\GLTH.Contracts.csproj", "{D7FFB6B7-A375-4B16-B8C0-745C256058C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLTH.Core", "GLTH.Core\GLTH.Core.csproj", "{6FFC607D-404E-47DE-8989-E9F525E3D379}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLTH.Managers", "GLTH.Managers\GLTH.Managers.csproj", "{F1E0B50C-AA9E-4936-B303-80224F43F25B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F222F5F-E65D-4C9D-AB23-3B9A3B7A8B59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F222F5F-E65D-4C9D-AB23-3B9A3B7A8B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F222F5F-E65D-4C9D-AB23-3B9A3B7A8B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F222F5F-E65D-4C9D-AB23-3B9A3B7A8B59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7FFB6B7-A375-4B16-B8C0-745C256058C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7FFB6B7-A375-4B16-B8C0-745C256058C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7FFB6B7-A375-4B16-B8C0-745C256058C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7FFB6B7-A375-4B16-B8C0-745C256058C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FFC607D-404E-47DE-8989-E9F525E3D379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FFC607D-404E-47DE-8989-E9F525E3D379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FFC607D-404E-47DE-8989-E9F525E3D379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FFC607D-404E-47DE-8989-E9F525E3D379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1E0B50C-AA9E-4936-B303-80224F43F25B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1E0B50C-AA9E-4936-B303-80224F43F25B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1E0B50C-AA9E-4936-B303-80224F43F25B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1E0B50C-AA9E-4936-B303-80224F43F25B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
