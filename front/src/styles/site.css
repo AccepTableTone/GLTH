@@ -57,6 +57,10 @@ label{
   font-style:italic;
 }
 
+.st-text{
+    color:#F7901E;
+}
+
 .airline-container{
   margin-top:12px;
 }

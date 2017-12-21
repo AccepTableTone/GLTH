@@ -39,14 +39,26 @@ class AirportAutocomplete extends Component {
         this.setState({searchTerm: nextProps.acText, airports:[]})
     }
 
+    highlightedSearchTerm(text) {
+        // Split on higlight term and include term into parts, ignore case
+        let parts = text.split(new RegExp(`(${this.state.searchTerm})`, 'gi'));
+        return (<span> { parts.map((part, i) => <span key={i} className={part.toLowerCase() === this.state.searchTerm.toLowerCase() ? 'st-text' : '' }>{ part }</span>)} </span>);            
+    }
+
+    reformatSearchTerm(str){
+        console.log(str);
+        console.log(str.replace(`${this.state.searchTerm}`, `<span className="st-text">${this.state.searchTerm}</span>`));
+        let tmp = str.replace(`${this.state.searchTerm}`, `<span className="st-text">${this.state.searchTerm}</span>`);
+        return tmp;
+    }
+
     //build drop down of airport options
     buildAutocompleteOptions = () => {
         return this.state.airports.map((item, idx) => {
-            let opt = `${item}`
             return (
                 <div onClick={() => this.onOptionSelect(item)} key={idx}>
-                    <div className="name-text">{item.City}, {item.Country}</div>
-                    <div className="sub-text">({item.IATA}-{item.Name})</div>
+                    <div className="name-text">{this.highlightedSearchTerm(`${item.City}, ${item.Country}`)}</div>
+                    <div className="sub-text">{this.highlightedSearchTerm(`${item.IATA}-${item.Name}`)}</div>
                 </div>
             )
         });
