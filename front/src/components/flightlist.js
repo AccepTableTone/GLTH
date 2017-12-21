@@ -82,16 +82,19 @@ const buildFlightList = (props) =>{
         //######################
 
         return (
-            <div className="bg-grey">
+            <div className="bg-grey padb-40">
                 <h3>{`Flights from ${props.origin.City}, ${props.origin.Country} to ${props.destination.City}, ${props.destination.Country}`}</h3>
                 {buildFlights()}
             </div>            
         );
     }else{
         return (
-            <div className="no-flight-text">
-                Sorry, we could not find any available flights o-[..\]-o
-            </div>
+            <div className="bg-grey padb-40">
+                <h3>{`Flights from ${props.origin.City}, ${props.origin.Country} to ${props.destination.City}, ${props.destination.Country}`}</h3>
+                <div className="no-flight-text flight-container">
+                    Sorry, we could not find any available flights o-[..\]-o
+                </div>
+            </div>            
         );
     }
 }

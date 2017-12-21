@@ -39,8 +39,9 @@ label{
 .no-flight-text{
   text-align:center;
   font-weight:bold;
-  color:#e45858;
+  color:#F7901E;
   padding:20px;
+  
 }
 
 .flight-num-container{
@@ -71,7 +72,9 @@ label{
 
 .flight-container{
   border: 1px solid #ccc;
-  margin:20px;
+  margin-left:20px;
+  margin-right:20px;
+  margin-bottom:20px;
   padding:15px;
   background-color:#fff;
 }
@@ -129,6 +132,8 @@ label{
 .bg-grey{
     background-color:#ededed;
 }
+
+.padb-40{padding-bottom:40px;}
 
 .searchform-container{
     background-color:#0DA2D4;
