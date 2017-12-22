@@ -1,5 +1,6 @@
 //react
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 //libraries
 import FontAwesome from 'react-fontawesome';
 //project
@@ -15,10 +16,13 @@ class AirportAutocomplete extends Component {
             airports:[],
             searchTerm:'',
             isSearching:false,
-            isError:false
+            isError:false,
+            listCursor:-1,
+            heightMarker: [],
+            heightMarkerAction:1
         }
 
-        this.onOptionSelect = this.onOptionSelect.bind(this);
+        this.handleKeyNavigation = this.handleKeyNavigation.bind(this);
     }
 
     //track characters entered by user
@@ -36,38 +40,62 @@ class AirportAutocomplete extends Component {
     //we pass the selected airport in from the parent after we tell them about it
     //this way the parent can blank out the text fields after a search is complete
     componentWillReceiveProps(nextProps){
-        this.setState({searchTerm: nextProps.acText, airports:[]})
+        this.setState({searchTerm: nextProps.acText, airports:[], heightMarker:[], heightMarkerAction:1})
     }
 
-    highlightedSearchTerm(text) {
+    //highlight the search term in each autocomplete option
+    highlightSearchTerm(text) {
         // Split on higlight term and include term into parts, ignore case
         let parts = text.split(new RegExp(`(${this.state.searchTerm})`, 'gi'));
         return (<span> { parts.map((part, i) => <span key={i} className={part.toLowerCase() === this.state.searchTerm.toLowerCase() ? 'st-text' : '' }>{ part }</span>)} </span>);            
-    }
-
-    reformatSearchTerm(str){
-        console.log(str);
-        console.log(str.replace(`${this.state.searchTerm}`, `<span className="st-text">${this.state.searchTerm}</span>`));
-        let tmp = str.replace(`${this.state.searchTerm}`, `<span className="st-text">${this.state.searchTerm}</span>`);
-        return tmp;
     }
 
     //build drop down of airport options
     buildAutocompleteOptions = () => {
         return this.state.airports.map((item, idx) => {
             return (
-                <div onClick={() => this.onOptionSelect(item)} key={idx}>
-                    <div className="name-text">{this.highlightedSearchTerm(`${item.City}, ${item.Country}`)}</div>
-                    <div className="sub-text">{this.highlightedSearchTerm(`${item.IATA}-${item.Name}`)}</div>
+                <div onClick={() => this.onOptionSelect(item)} key={idx} ref={`${this.state.listCursor === idx ? 'focusedDiv' : ''}`} className={`${this.state.listCursor === idx ? 'ac-result-focused-div' : ''}`}>
+                    <div className="name-text">{this.highlightSearchTerm(`${item.City}, ${item.Country}`)}</div>
+                    <div className="sub-text">{this.highlightSearchTerm(`${item.IATA}-${item.Name}`)}</div>
                 </div>
             )
         });
     }
 
+    componentDidUpdate() {
+        if(this.state.listCursor > -1 && this.state.listCursor < this.state.airports.length){
+            //get div container holding airport divs
+            let airportOptsContainer = ReactDOM.findDOMNode(this.refs.autocompletOptionsContainer);
+            //get highlighted div height, determine which way we are going
+            let highlightedHeight = ReactDOM.findDOMNode(this.refs.focusedDiv).clientHeight;
+            let isMovingUp = this.state.heightMarkerAction < 0;            
+            //track height from top
+            if(isMovingUp)
+                this.state.heightMarker.pop();
+            else
+                this.state.heightMarker.push(highlightedHeight);
+            //we may have to scroll
+            let distanceFromTop = this.state.heightMarker.reduce((a, b) => a + b, 0);
+            if(distanceFromTop > 220 || (distanceFromTop < 200 && isMovingUp))
+                airportOptsContainer.scrollTop = (this.state.heightMarker.reduce((a, b) => a + b, 0)) - highlightedHeight;
+        }
+    }
+
     //select text box text on focus
     handleFocus = (event) => {event.target.select();}
-    handleBlur = (event) => {
-        this.setState({airports:[], searchTerm:''})
+    handleBlur = (event) => {this.setState({airports:[], searchTerm:''})}
+    handleKeyNavigation = (event) => {
+        //down arrow - moving away from text box 
+        //if user steps down the list then back up into the text box, then down the list again - we need to blank out the heightMarker array because the height of the first option is still in the array  o--(..\)o     
+        if (event.keyCode === 40 && this.state.listCursor < this.state.airports.length-1)
+            this.setState({listCursor: this.state.listCursor + 1, heightMarkerAction:1, heightMarker: (this.state.listCursor === -1 ? [] : this.state.heightMarker)});
+        //up arrow - moving closer to text box
+        else if(event.keyCode === 38 && this.state.listCursor > -1)
+            this.setState({listCursor: this.state.listCursor - 1, heightMarkerAction:-1});
+        //the user hits enter and selects an airport
+        else if(event.keyCode === 13)
+            if(this.state.listCursor > -1)
+                ReactDOM.findDOMNode(this.refs.focusedDiv).click();                   
     }
 
     //get list of airports
@@ -104,7 +132,7 @@ class AirportAutocomplete extends Component {
                             <div></div>
                 }
                 <div className="ac-input-container">
-                    <div><input type="text" className="search-input" maxLength="75" autoComplete="off" onChange={this.onInputChange} onFocus={this.handleFocus} value={this.state.searchTerm}  /></div>
+                    <div><input type="text" className="search-input" maxLength="75" autoComplete="off" onChange={this.onInputChange} onFocus={this.handleFocus} value={this.state.searchTerm} onKeyDown={ this.handleKeyNavigation } /></div>
                     {
                         this.state.isSearching
                             ?
@@ -115,7 +143,7 @@ class AirportAutocomplete extends Component {
                     {
                         this.state.airports.length > 0
                             ?
-                                <div className="ac-result-container">{this.buildAutocompleteOptions()}</div>
+                                <div className="ac-result-container" ref="autocompletOptionsContainer">{this.buildAutocompleteOptions()}</div>
                             :
                                 <div></div>
                     }                 

@@ -178,11 +178,18 @@ h3{
     font-size:12px;
     padding: 3px;
 }
-.ac-result-container div:hover{
+.ac-result-container div:hover, .ac-result-container div:focus-within{
     cursor:pointer;
     font-size:12px;
     background-color:#f4f4f4
 }
+
+.ac-result-focused-div{
+    cursor:pointer;
+    font-size:12px;
+    background-color:#f4f4f4
+}
+
 
 @media (max-width: 650px) {
   .origin-container, .destination-container, .airline-container, .ac-container, .ac-button-container{
