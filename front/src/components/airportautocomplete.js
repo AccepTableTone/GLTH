@@ -27,7 +27,7 @@ class AirportAutocomplete extends Component {
 
     //track characters entered by user
     onInputChange = (event) => {
-        this.setState({searchTerm:event.target.value});
+        this.setState({searchTerm:event.target.value, listCursor:-1, heightMarker:[], heightMarkerAction:1});
         if(event.target.value.length > 2)
             this.searchForAirports(event.target.value);
     };

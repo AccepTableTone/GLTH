@@ -14,12 +14,23 @@ namespace GLTH.Managers.Flights
         {
             //container for search results
             FlightSearchResponseDto response = new FlightSearchResponseDto();
-
             try
             {
                 using (DBEntities dbConn = new DBEntities())
                 {
+                    //handle same airoprt search - client may not be checking
+                    if (origin.Equals(destination, StringComparison.OrdinalIgnoreCase))
+                    {
+                        response.Flights = new List<List<RouteDto>>();
+                        response.Airports = new List<AirportDto>();
+                        response.Airlines = new List<AirlineDto>();
+                        response.UserMessage = "Origin and destination are the same airport.";
+
+                        return response;
+                    }
+
                     response.Flights = FlightProxy.FindFlights(dbConn, origin, destination);
+                    response.UserMessage = string.Format("{0} flights.", response.Flights.Count);
 
                     var iataCodes = response.Flights.SelectMany(q => q.Select(r => r.Destination)).Union(response.Flights.SelectMany(q => q.Select(r => r.Origin)));
                     var airlinesCodes = response.Flights.SelectMany(q => q.Select(r => r.Airline));
@@ -33,13 +44,7 @@ namespace GLTH.Managers.Flights
             catch (Exception ex)
             {
                 //log ex
-
-                response.Flights = null;
-                response.Airports = null;
-                response.Airlines = null;
-                response.UserMessage = string.Format("MESSAGE:{0}<BR><BR>STACK{1}", ex.Message, ex.StackTrace);
-                //response.UserMessage = "Sorry, there was an unexpected error. Please try again.";
-                return response;
+                throw new Exception("Unexpected Error");
             }
         }
 
@@ -47,7 +52,11 @@ namespace GLTH.Managers.Flights
         {
             string searchLetters = HttpUtility.UrlDecode(letters);
             searchLetters = searchLetters.Replace(" ", ",").Replace(",,", ",").Replace(",", "*,") + "*";
-            
+
+            //check for string and length of string in case client isn't
+            if (string.IsNullOrWhiteSpace(letters) || letters.Length < 3)
+                return new List<AirportDto>();
+
             using (DBEntities dbConn = new DBEntities())
             {
                 return FlightProxy.SearchAirports(dbConn, searchLetters);

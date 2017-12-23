@@ -15,10 +15,13 @@ export default function(state = initialstate, action){
             return{
                 ...state,
                 isLoading: false,
-                didFlightSearch: false,
+                didFlightSearch: true,
                 hasError:true,
-                errorMessage: action.errorMessage
-            };
+                errorMessage: action.errorMessage,
+                airports: [],
+                airlines: [],
+                flights: []
+           };
         case CONSTS.ACTIONTYPE_DONEFLIGHTSEARCH:
             return{
                 ...state,

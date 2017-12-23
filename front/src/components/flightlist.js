@@ -6,13 +6,9 @@ import _ from 'lodash';
 
 const FlightList = (props) => {
     return(
-        props.state.didFlightSearch
-            ?
-                <div>
-                    {buildFlightList(props.state)}
-                </div>
-            :
-                <div></div>
+        <div>
+            {buildFlightList(props.state)}
+        </div>
     );
 };
 
@@ -87,7 +83,7 @@ const buildFlightList = (props) =>{
                 {buildFlights()}
             </div>            
         );
-    }else{
+    }else if(props.hasError === false){
         return (
             <div className="bg-grey padb-40">
                 <h3>{`Flights from ${props.origin.City}, ${props.origin.Country} to ${props.destination.City}, ${props.destination.Country}`}</h3>

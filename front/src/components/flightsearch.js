@@ -25,7 +25,14 @@ const FlightSearch = (props) => {
                     :
                         <div></div>
             }
-            <FlightList state={props.state}/>                
+            {
+                props.state.didFlightSearch
+                    ?
+                        <FlightList state={props.state}/>                
+                    :
+                        <div></div>
+            }
+            
         </div>
     );
 };
