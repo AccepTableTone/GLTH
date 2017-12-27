@@ -162,5 +162,53 @@ namespace GLTH.Core.Proxies
         {
             return dbConn.Database.SqlQuery<AirportDto>(string.Format("CALL SearchAirports('{0}')", letters)).ToList<AirportDto>();
         }
+
+        public static List<PopularFlightsAirportDto> GetPopularFlightsAirportList(DBEntities dbConn)
+        {
+            //get top 5 origins and top five destinations
+            //assumption is there is a route connecting each popular origin to each popular destination
+            //these queries as is are slow without 3 indexes on glth_airports.iata, glth_routes.origin, glth_routes.destination
+            var origs = dbConn.glth_routes
+                            .GroupBy(q => q.origin)
+                            .Join(dbConn.glth_airports,
+                                o => o.Key,
+                                a => a.iata,
+                                (o, a) => new { origin = o, airport = a }
+                            )
+                            .OrderByDescending(q => q.origin.Count())
+                            .Take(5)
+                            .Select(q => new PopularFlightsAirportDto()
+                            {
+                                AirportType = PopularFlightsAirportDto.IS_ORIGIN,
+                                //Name = q.airport.name,
+                                City = q.airport.city,
+                                Country = q.airport.country,
+                                IATA = q.airport.iata
+                            }).ToList();
+
+            var dests = dbConn.glth_routes
+                             .GroupBy(q => q.destination)
+                             .Join(dbConn.glth_airports,
+                                 d => d.Key,
+                                 a => a.iata,
+                                 (d, a) => new { destination = d, airport = a }
+                             )
+                             .OrderByDescending(q => q.destination.Count())
+                             .Take(5)
+                             .Select(q => new PopularFlightsAirportDto()
+                             {
+                                 AirportType = PopularFlightsAirportDto.IS_DESTINATION,
+                                //Name = q.airport.name,
+                                City = q.airport.city,
+                                 Country = q.airport.country,
+                                 IATA = q.airport.iata
+                             });
+
+             origs.AddRange(dests);
+
+            return origs;
+
+        }
+
     }
 }

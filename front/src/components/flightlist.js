@@ -35,8 +35,45 @@ const buildFlightList = (props) =>{
             );
         }
         const buildAirlineDiv = (airline) => {
+            let imgSrc = "";
+            //logo should be in db
+            const checkForLogo = (code) => {                
+                switch(code){
+                    case "CA":
+                        imgSrc =  "https://upload.wikimedia.org/wikipedia/en/thumb/9/97/Air_China_Logo.svg/250px-Air_China_Logo.svg.png";
+                        break;
+                    case "CZ":
+                        imgSrc = "https://upload.wikimedia.org/wikipedia/en/4/4c/China_Southern_Airlines_logo.png";
+                        break;
+                    case "WN":
+                        imgSrc = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Southwest_Airlines_logo_2014.svg/300px-Southwest_Airlines_logo_2014.svg.png";
+                        break;
+                    case "TK":
+                        imgSrc = "https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/Turkish_Airlines_logo.svg/300px-Turkish_Airlines_logo.svg.png";
+                        break;
+                    case "UA":
+                        imgSrc = "https://upload.wikimedia.org/wikipedia/en/thumb/e/e0/United_Airlines_Logo.svg/300px-United_Airlines_Logo.svg.png";
+                        break;
+                    case "WS":
+                        imgSrc = "https://upload.wikimedia.org/wikipedia/en/thumb/d/de/WestJet_logo_2016.svg/300px-WestJet_logo_2016.svg.png";
+                        break;
+                    case "AC":
+                        imgSrc = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Air_Canada_Logo.svg/300px-Air_Canada_Logo.svg.png";
+                        break;
+                    default:
+                        imgSrc = "";
+                }
+            }
+
+            //do we have the logo of this airline
+            checkForLogo(airline.Code);
+            //if not logo - just show airline name
             return (
-                <div className="name-text">{airline.Name} ({airline.Code})</div>
+                imgSrc === ""
+                    ?
+                        <div className="name-text">{airline.Name} ({airline.Code})</div>
+                    :
+                        <div className="name-text"><img src={imgSrc} alt={`${airline.Name} logo`}/></div>
             );
         }
 

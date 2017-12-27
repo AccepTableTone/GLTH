@@ -31,6 +31,32 @@ export function getFlights(origin, destination){
     };
 }
 
+export function getPopularFlights(){    
+    return (dispatch) => {
+        let getError = false;
+        fetch(`${CONSTS.apiBaseUrl}/popularflights`)
+        .then((response) => {
+            //check if the api sent back an exception
+            //if it errored we just pretend we don't have content - component only renders with data
+            if (!response.ok){
+                getError = true;
+                dispatch(havePopularFlights([]));
+            }
+            return response;
+        })
+        .then(response => response.json())
+        .then(response =>  {
+            if(!getError)
+                dispatch(havePopularFlights(response));
+        })
+        .catch(error => {
+            if(!getError)
+                dispatch(havePopularFlights([]));
+        });    
+    };
+}
+
+
 
 //#######################################################################################################################
 
@@ -56,5 +82,13 @@ function haveFlightResults(flights, airports, airlines, origin, destination){
         airlines,
         origin,
         destination
+    };
+}
+
+function havePopularFlights(airports)
+{
+    return{
+        type: CONSTS.ACTIONTYPE_HAVEPOPULARFLIGHTS,
+        airports
     };
 }

@@ -62,5 +62,15 @@ namespace GLTH.Managers.Flights
                 return FlightProxy.SearchAirports(dbConn, searchLetters);
             }
         }
+
+        public static List<PopularFlightsAirportDto> GetPopularFlights()
+        {
+            using (DBEntities dbConn = new DBEntities())
+            {
+                return FlightProxy.GetPopularFlightsAirportList(dbConn);
+            }
+
+            
+        }
     }
 }

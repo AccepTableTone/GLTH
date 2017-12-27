@@ -22,5 +22,13 @@ namespace GLTH.Api.Controllers
         {
             return FlightManager.SearchAirports(keyword);
         }
+
+        [System.Web.Http.HttpGet]
+        [Route("api/popularflights")]
+        public List<PopularFlightsAirportDto> PopularFlights()
+        {
+            return FlightManager.GetPopularFlights();
+        }
+
     }
 }

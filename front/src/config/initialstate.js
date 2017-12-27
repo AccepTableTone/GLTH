@@ -9,5 +9,6 @@ export default {
     airports:[],
     airlines:[],
     flights:[],
+    popularFlights:[],
     didFlightSearch: false
 };

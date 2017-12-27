@@ -35,6 +35,11 @@ export default function(state = initialstate, action){
                 destination: action.destination,
                 didFlightSearch: true
             };
+        case CONSTS.ACTIONTYPE_HAVEPOPULARFLIGHTS:
+            return{
+                ...state,
+                popularFlights: action.airports
+            };
         default:
             return state;            
     }

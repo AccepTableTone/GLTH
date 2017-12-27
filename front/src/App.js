@@ -4,22 +4,29 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 //project
 import FlightSearch from './components/flightsearch';
+import PopularFlights from './components/popularflights';
+
 import './styles/site.css';
 
-import {getFlights} from './redux/actions/actions';
+import {getFlights, getPopularFlights} from './redux/actions/actions';
 
 class App extends Component {
   
+    componentDidMount = () => {
+        this.props.getPopularFlights();
+    }
+
     render() {
       return (
             <div className="app-container">
                 <FlightSearch state={this.props.state} searchFlights={(orig, dest) => {this.props.searchForFlights(orig, dest)}} />
+                <PopularFlights popularFlights={this.props.state.popularFlights} searchFlights={(orig, dest) => {this.props.searchForFlights(orig, dest)}}></PopularFlights>
             </div>
         );        
     }
 }
 
-function mapStateToProps(state){
+const mapStateToProps = (state) => {
   return{
     state:state.flights
   };
@@ -27,7 +34,8 @@ function mapStateToProps(state){
 
 const mapDispatchToProps = (dispatch) => {
   return{
-    searchForFlights: (origin, destination) => dispatch(getFlights(origin, destination))
+    searchForFlights: (origin, destination) => dispatch(getFlights(origin, destination)),
+    getPopularFlights: () => dispatch(getPopularFlights())
   }
 }
 
