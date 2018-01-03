@@ -1,2 +1,4 @@
 # GLTH
-An assessment of sorts o-[../]-o
+Front end: http://glth.acceptabletone.com/
+
+Back end: http://glth.acceptabletone.com/swagger/ui/index
