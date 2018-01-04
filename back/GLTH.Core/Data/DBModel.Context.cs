@@ -28,5 +28,6 @@ namespace GLTH.Core.Data
         public virtual DbSet<glth_airlines> glth_airlines { get; set; }
         public virtual DbSet<glth_airports> glth_airports { get; set; }
         public virtual DbSet<glth_routes> glth_routes { get; set; }
+        public virtual DbSet<glth_routes_w_distance> glth_routes_w_distance { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace GLTH.Contracts
     {
         public List<AirlineDto> Airlines { get; set; }
         public List<AirportDto> Airports { get; set; }
-        public List<List<RouteDto>> Flights { get; set; }
+        public List<FlightDto> Flights { get; set; }
         public string UserMessage { get; set; }
     }
 }

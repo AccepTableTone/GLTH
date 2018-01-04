@@ -36,10 +36,21 @@
           <Property Name="origin" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="destination" Type="varchar" MaxLength="3" Nullable="false" />
         </EntityType>
+        <EntityType Name="glth_routes_w_distance">
+          <Key>
+            <PropertyRef Name="route_id" />
+          </Key>
+          <Property Name="route_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="airlinetwolettercode" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="origin" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="destination" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="distance" Type="decimal" Precision="8" Scale="2" />
+        </EntityType>
         <EntityContainer Name="DBModelStoreContainer">
           <EntitySet Name="glth_airlines" EntityType="Self.glth_airlines" Schema="misc_data" store:Type="Tables" />
           <EntitySet Name="glth_airports" EntityType="Self.glth_airports" Schema="misc_data" store:Type="Tables" />
           <EntitySet Name="glth_routes" EntityType="Self.glth_routes" Schema="misc_data" store:Type="Tables" />
+          <EntitySet Name="glth_routes_w_distance" EntityType="Self.glth_routes_w_distance" Schema="misc_data" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -49,6 +60,7 @@
           <EntitySet Name="glth_airlines" EntityType="DBModel.glth_airlines" />
           <EntitySet Name="glth_airports" EntityType="DBModel.glth_airports" />
           <EntitySet Name="glth_routes" EntityType="DBModel.glth_routes" />
+          <EntitySet Name="glth_routes_w_distance" EntityType="DBModel.glth_routes_w_distance" />
         </EntityContainer>
         <EntityType Name="glth_airlines">
           <Key>
@@ -80,6 +92,16 @@
           <Property Name="airlinetwolettercode" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="origin" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="destination" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="glth_routes_w_distance">
+          <Key>
+            <PropertyRef Name="route_id" />
+          </Key>
+          <Property Name="route_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="airlinetwolettercode" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="origin" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="destination" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="distance" Type="Decimal" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -118,6 +140,17 @@
                 <ScalarProperty Name="origin" ColumnName="origin" />
                 <ScalarProperty Name="airlinetwolettercode" ColumnName="airlinetwolettercode" />
                 <ScalarProperty Name="routeid" ColumnName="routeid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="glth_routes_w_distance">
+            <EntityTypeMapping TypeName="DBModel.glth_routes_w_distance">
+              <MappingFragment StoreEntitySet="glth_routes_w_distance">
+                <ScalarProperty Name="distance" ColumnName="distance" />
+                <ScalarProperty Name="destination" ColumnName="destination" />
+                <ScalarProperty Name="origin" ColumnName="origin" />
+                <ScalarProperty Name="airlinetwolettercode" ColumnName="airlinetwolettercode" />
+                <ScalarProperty Name="route_id" ColumnName="route_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

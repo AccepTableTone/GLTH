@@ -14,12 +14,15 @@ namespace GLTH.Core.Proxies
             List<List<RouteDto>> finalFlightRoutes = new List<List<RouteDto>>();
 
             //get the routes that start at the origin 
-            var firstRoutes = dbConn.glth_routes
+            //we also filter routes by distance - routes with no distance are routes with no matching airport in the airport data
+            var firstRoutes = dbConn.glth_routes_w_distance
+                            .Where(q => q.distance != null)
                             .Where(q => q.origin.Equals(orig, StringComparison.OrdinalIgnoreCase))
                             .Select(q => new RouteDto() {
                                 Airline = q.airlinetwolettercode,
                                 Origin = q.origin,
-                                Destination = q.destination
+                                Destination = q.destination,
+                                Distance = (double)q.distance
                             })
                             .ToList();
 
@@ -113,14 +116,17 @@ namespace GLTH.Core.Proxies
             //get the next set of routes starting from where the lastRoutes ended
             var newOrigins = lastRoutes.Select(r => r.Destination);
             //we filter by visited airports so we don;t end up going backwards
-            var newRoutes = dbConn.glth_routes
+            //we also filter routes by distance - routes with no distance are routes with no matching airport in the airport data
+            var newRoutes = dbConn.glth_routes_w_distance
                             .Where(q => !visitedAirports.Contains(q.destination))
-                            .Where(q => newOrigins.Contains(q.origin))
+                            .Where(q => q.distance != null)
+                            .Where(q => newOrigins.Contains(q.origin))                            
                             .Select(q => new RouteDto()
                             {
                                 Airline = q.airlinetwolettercode,
                                 Origin = q.origin,
-                                Destination = q.destination
+                                Destination = q.destination,
+                                Distance = (double)q.distance
                             })
                             .ToList();
 

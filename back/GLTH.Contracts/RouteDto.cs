@@ -11,5 +11,6 @@ namespace GLTH.Contracts
         public string Airline { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
+        public double Distance { get; set; }
     }
 }

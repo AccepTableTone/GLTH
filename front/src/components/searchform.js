@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 //project
 import AirportAutocomplete from './airportautocomplete';
+import Images from '../config/images';
 
 class SearchForm extends Component{
 
@@ -29,6 +30,7 @@ class SearchForm extends Component{
     render(){
         return (
             <div className="bg-white">
+                <div className="shortest-container"><img src={Images.shortest} alt="'shortest flight' search"/></div>
                 <h1>Flight Search</h1>
                 <div className="ac-container">
                     <label>Flying from</label>

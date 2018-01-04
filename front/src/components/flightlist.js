@@ -84,7 +84,7 @@ const buildFlightList = (props) =>{
                     return (
                         <div className="flight-container" key={`trip${tripIdx}`}>
                         {
-                            trips.map((route, routeIdx) => {
+                            trips.Routes.map((route, routeIdx) => {
                                 let airline = findAirline(route.Airline);
                                 let origAirport = findAirport(route.Origin);
                                 let destAirport = findAirport(route.Destination);
@@ -92,9 +92,9 @@ const buildFlightList = (props) =>{
                                 return (
                                     <div key={`trip${tripIdx}${routeIdx}`}>
                                         {
-                                            trips.length > 1
+                                            trips.Routes.length > 1
                                                 ?
-                                                    <div className="flight-num-container">FLIGHT {routeIdx+ 1}</div>
+                                                    <div className="flight-num-container">FLIGHT {routeIdx+ 1}  <span className="distance-container">Distance: {parseInt(route.Distance, 10)}km</span></div>
                                                 :
                                                     <div></div>
                                         }
@@ -108,6 +108,7 @@ const buildFlightList = (props) =>{
                                 );
                             })
                         }
+                        <span className="total-distance-container">Total Distance: {parseInt(trips.TotalDistance, 10)}km</span>
                         </div>    
                     )
                 });

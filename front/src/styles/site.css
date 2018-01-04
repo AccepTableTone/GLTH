@@ -144,6 +144,7 @@ label{
 .searchform-container{
     background-color:#0DA2D4;
     padding:10px 0 20px 0;
+    position:relative;
 }
 
 
@@ -238,7 +239,32 @@ h4{
     cursor:pointer;
     text-decoration:underline;
 }
+.distance-container{
+    font-size:11px;
+    color:#ccc;
+    float:right;
+    position:relative;
+    top:7px;
+}
+.total-distance-container{
+    font-size:14px;
+    color:#0DA2D4;
+    float:right;
+    top:7px;
+    position:relative;
+    top:-7px;
 
+}
+
+.shortest-container{
+    position:absolute;
+    z-index:10;
+    left:-210px;
+    top:20px;
+}
+@media (max-width: 1200px) {
+    .shortest-container{display:none;}
+}
 @media (max-width: 650px) {
     .origin-container, .destination-container, .airline-container, .ac-container, .ac-button-container, .popular-flights-column{
       float:left;

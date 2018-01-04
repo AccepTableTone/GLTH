@@ -9,5 +9,6 @@ namespace GLTH.Contracts
     public class FlightDto
     {
         public List<RouteDto> Routes { get; set; }
+        public double TotalDistance { get; set; }
     }
 }
