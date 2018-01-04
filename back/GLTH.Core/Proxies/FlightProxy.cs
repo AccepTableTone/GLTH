@@ -85,7 +85,8 @@ namespace GLTH.Core.Proxies
                             finalRoutes.Add(newRouteList);
                         }
                         //this leg doesn't hit the destination so add it to the new list of starting routes
-                        else
+                        //but we don;t care about the new starting routes if we have any final routes
+                        else if(finalRoutes.Count == 0)
                         {
                             //can't pass route lists around by reference so clone it
                             var newRouteList = CloneRouteList(route);
