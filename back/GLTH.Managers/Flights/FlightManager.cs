@@ -32,6 +32,17 @@ namespace GLTH.Managers.Flights
                     //get flights with matching origin and destination
                     var matchingFlights = FlightProxy.FindFlights(dbConn, origin, destination);
 
+                    //no matching flights 
+                    if (matchingFlights.Count == 0)
+                    {
+                        response.Flights = new List<FlightDto>();
+                        response.Airports = new List<AirportDto>();
+                        response.Airlines = new List<AirlineDto>();
+                        response.UserMessage = "No available flights";
+
+                        return response;
+                    }
+
                     //return data
                     response.Flights = GetShortestFlightsByDistance(matchingFlights);
                     response.UserMessage = string.Format("{0} flights.", response.Flights.Count);
